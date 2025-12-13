@@ -1,30 +1,19 @@
 with open("input.txt","r") as file:
+    
     games = file.read().strip().splitlines()
     
-    my_scores = []
-    
-    for outcome in games:
-        signs = outcome.split()
-        for input in signs:
-            if input == "A":
-                opp = 1
-            elif input == "B":
-                opp = 2
-            elif input == "C":
-                opp = 3
-            elif input == "X":
-                home = 1
-            elif input == "Y":
-                home = 2
-            else:
-                home = 3
+    #making a dict instead of using long if elif ladders
+
+    score_map = { "A": 1, "B": 2, "C": 3, "X": 1, "Y": 2, "Z": 3 }
+
+    scores = []
+
+    for game in games:
+        opp , home = (score_map[s] for s in game.split())
         if opp == home:
-            my_scores.append(3+home)
+            scores.append(3 + home)
+        elif home == (opp % 3) + 1:
+            scores.append(6 + home)
         else:
-            if opp + 1 > 3:
-                opp = opp % 3
-            if home == opp + 1:
-                my_scores.append(6+home)
-            else:
-                my_scores.append(home)
-    print(sum(my_scores))
+            scores.append(home)
+    print(sum(scores))
