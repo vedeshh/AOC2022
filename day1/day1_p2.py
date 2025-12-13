@@ -1,13 +1,7 @@
 with open("input.txt","r") as file:
-    content = file.read().strip()
-    elves_snacks_log = content.split("\n\n")
     
-    total_snacks_array = []
+    elves_snacks_log = file.read().strip().split("\n\n")
     
-    for elf in elves_snacks_log:
-        sum_of_snacks = sum(map(int,elf.splitlines()))
-        total_snacks_array.append(sum_of_snacks)
-    
-    total_snacks_array.sort()
+    snacks_array = [sum(map(int,s.splitlines())) for s in elves_snacks_log]
 
-    print(sum(total_snacks_array[-3:])) 
+    print(sum(sorted(snacks_array)[-3:]))
