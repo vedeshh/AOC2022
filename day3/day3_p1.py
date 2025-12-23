@@ -1,21 +1,15 @@
-with open("input.txt","r") as file:
-    data = file.read().strip().splitlines()
+def priority(c: str):
+    return ord(c) - 38 if c.isupper() else ord(c) - 96
 
-    value = []
+total = 0
 
-    for entry in data:
-        length = len(entry)
-        compartment1 = entry[0:(length//2)]
-        compartment2 = entry[(length//2):]
-        for letter in compartment1:
-            if letter in compartment2:
-                if ord(letter) < 91:
-                    value.append(ord(letter) - 64 + 26)
-                    break
-                else:
-                    value.append(ord(letter) - 96)
-                    break
-                
+with open("sample.txt","r") as file:
+    for line in file.read().strip().splitlines():
+        mid = len(line) // 2
+        comp1,comp2 = line[:mid],line[mid:]
 
-# print(ord("A"))
-print(sum(value))
+        common_char = (set(comp1) & set(comp2)).pop()
+        total += priority(common_char)
+
+print(total)
+        
